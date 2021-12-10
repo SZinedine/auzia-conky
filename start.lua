@@ -2,7 +2,7 @@
 -- Author:      Zineddine SAIBI
 -- Software:    Auzia Conky
 -- Type:        Conky Theme
--- Version:     0.1 (07 Sep 2021)
+-- Version:     0.2 (10 Dec 2021)
 -- License:     GPL-3.0
 -- repository:  https://www.github.com/SZinedine/auzia-conky
 ----------------------------------
@@ -11,46 +11,60 @@ require 'abstract'
 
 to_draw_titles = true
 
-cpu_x, cpu_y = 200, 200
-cputemp_radius = 183
-cputemp_angle_begin = 45
-cputemp_angle_end = -300
-cpu1_radius = 160
-cpu2_radius = 139
-cpu3_radius = 120
-cpu4_radius = 103
-cpu_angle_begin = 0
-cpu_angle_end = -260
+settings    = {
+    cpu     = {},
+    mem     = {},
+    battery = {},
+    clock   = {},
+    disk    = {},
+    net     = {}
+}
 
-mem_x = 1020
-mem_y = cpu_y
-mem_r = 160
-swp_r = mem_r-20
-memtext_x = mem_x - 90
-memtext_y = mem_y - 50
-
-bat_x, bat_y = 610, -900
-battery_radius = 1600
-bat_w = 3
-bat_beg, bat_end = -160, -200
-batperc_x, batperc_y = 1190, 605
-battitle_x, battitle_y = bat_x-40, 720
-
-clock_x, clock_y = 600, 300
-clock_w = 10
-clock_r = 130
-clock_font_h = 110
-clock_font_m = clock_font_h/1.3
-
-dsk_x, dsk_y = 840, 500
-dsk_r = 120
-dsk_thick = 18
-dsk_ang_begin, dsk_ang_end = 20, -260
-
-net_x, net_y = 360, 500
-net_width = 10
-net_radius = 120
-net_ang_begin, net_ang_end = 0, 320
+settings.cpu.x                = 200
+settings.cpu.y                = 200
+settings.cpu.radius_temp      = 183
+settings.cpu.temp_begin_angle = 45
+settings.cpu.temp_end_angle   = -300
+settings.cpu.c1_radius        = 160
+settings.cpu.c2_radius        = 139
+settings.cpu.c3_radius        = 120
+settings.cpu.c4_radius        = 103
+settings.cpu.begin_angle      = 0
+settings.cpu.end_angle        = -260
+settings.mem.x                = 1020
+settings.mem.y                = settings.cpu.y
+settings.mem.mem_radius       = 160
+settings.mem.swap_radius      = settings.mem.mem_radius - 20
+settings.mem.text_x           = settings.mem.x - 90
+settings.mem.text_y           = settings.mem.y - 50
+settings.battery.x            = 610
+settings.battery.y            = -900
+settings.battery.radius       = 1600
+settings.battery.width        = 3
+settings.battery.begin        = -160
+settings.battery.end_         = -200
+settings.battery.x_perc       = 1190
+settings.battery.y_perc       = 605
+settings.battery.x_title      = settings.battery.x - 40
+settings.battery.y_title      = 720
+settings.clock.x              = 600
+settings.clock.y              = 300
+settings.clock.width          = 10
+settings.clock.radius         = 140
+settings.clock.font_height    = 110
+settings.clock.font_m         = settings.clock.font_height / 1.3
+settings.disk.x               = 840
+settings.disk.y               = 500
+settings.disk.radius          = 120
+settings.disk.thickness       = 18
+settings.disk.begin_angle     = 20
+settings.disk.end_angle       = -260
+settings.net.x                = 360
+settings.net.y                = 500
+settings.net.width            = 10
+settings.net.radius           = 120
+settings.net.begin_angle      = 0
+settings.net.end_angle        = 320
 
 
 function start()
@@ -90,12 +104,12 @@ function draw_cpu()
     local cpu2 = cpu_percent(2)
     local cpu3 = cpu_percent(3)
     local cpu4 = cpu_percent(4)
-    ring_anticlockwise(cpu_x, cpu_y, cputemp_radius, 3, cputemp_angle_begin, cputemp_angle_end, tmp, 95, color_frompercent(tonumber(tmp)))
-    ring_anticlockwise(cpu_x, cpu_y, cpu1_radius+15, 5, cpu_angle_begin, cpu_angle_end, cpu, 100, color_frompercent(tonumber(cpu)))    -- total CPU
-    ring_anticlockwise(cpu_x, cpu_y, cpu1_radius, 20, cpu_angle_begin, cpu_angle_end, cpu1, 100, color_frompercent(tonumber(cpu1)))
-    ring_anticlockwise(cpu_x, cpu_y, cpu2_radius, 18, cpu_angle_begin, cpu_angle_end, cpu2, 100, color_frompercent(tonumber(cpu2)))
-    ring_anticlockwise(cpu_x, cpu_y, cpu3_radius, 16, cpu_angle_begin, cpu_angle_end, cpu3, 100, color_frompercent(tonumber(cpu3)))
-    ring_anticlockwise(cpu_x, cpu_y, cpu4_radius, 15, cpu_angle_begin, cpu_angle_end, cpu4, 100, color_frompercent(tonumber(cpu4)))
+    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.radius_temp, 3, settings.cpu.temp_begin_angle, settings.cpu.temp_end_angle, tmp, 95, color_frompercent(tonumber(tmp)))
+    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.c1_radius+15, 5, settings.cpu.begin_angle, settings.cpu.end_angle, cpu, 100, color_frompercent(tonumber(cpu)))    -- total CPU
+    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.c1_radius, 20, settings.cpu.begin_angle, settings.cpu.end_angle, cpu1, 100, color_frompercent(tonumber(cpu1)))
+    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.c2_radius, 18, settings.cpu.begin_angle, settings.cpu.end_angle, cpu2, 100, color_frompercent(tonumber(cpu2)))
+    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.c3_radius, 16, settings.cpu.begin_angle, settings.cpu.end_angle, cpu3, 100, color_frompercent(tonumber(cpu3)))
+    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.c4_radius, 15, settings.cpu.begin_angle, settings.cpu.end_angle, cpu4, 100, color_frompercent(tonumber(cpu4)))
 
     write(330, 90, tmp .. "°C", 12, main_text_color)
     write(205, 45, cpu1 .. "%", 12, main_text_color)
@@ -109,16 +123,15 @@ end
 function draw_memory()
     local memperc = memory_percent()
     local swpperc = swap_percent()
-    local usedmem = "Usage: " .. memory() .. " / " .. memory_max()
     local usedmem = string.format("Usage: %s / %s (%s%s)", memory(), memory_max(), memperc, "%")
 
-    ring_clockwise(mem_x, mem_y, mem_r, 18, 0, 320, memperc, 100, color_frompercent(tonumber(memperc)))
-    ring_clockwise(mem_x, mem_y, mem_r-18, 14, 0, 320, swpperc, 100, color_frompercent(tonumber(swpperc)))
-    write(memtext_x+20, memtext_y-110, "ram: " ..memperc .. "%", 12, main_text_color)
-    write(memtext_x+20, memtext_y-85, "swap: " ..swpperc .. "%", 12, main_text_color)
+    ring_clockwise(settings.mem.x, settings.mem.y, settings.mem.mem_radius, 18, 0, 320, memperc, 100, color_frompercent(tonumber(memperc)))
+    ring_clockwise(settings.mem.x, settings.mem.y, settings.mem.mem_radius-18, 14, 0, 320, swpperc, 100, color_frompercent(tonumber(swpperc)))
+    write(settings.mem.text_x+20, settings.mem.text_y-110, "ram: " ..memperc .. "%", 12, main_text_color)
+    write(settings.mem.text_x+20, settings.mem.text_y-85, "swap: " ..swpperc .. "%", 12, main_text_color)
 
-    write(memtext_x, memtext_y, usedmem, 12, main_text_color)
-    write_list_proccesses_mem(memtext_x+15, memtext_y+20, 20, 5, 12, main_text_color)
+    write(settings.mem.text_x, settings.mem.text_y, usedmem, 12, main_text_color)
+    write_list_proccesses_mem(settings.mem.text_x+15, settings.mem.text_y+20, 20, 5, 12, main_text_color)
 end
 
 
@@ -128,14 +141,14 @@ function draw_clock()
     local h = time_hour24()
     local date = string.format("%s, %s %s, %s", time_day_short(), time_month_short(), time_day_number(), time_year())
 
-    ring_clockwise(clock_x, clock_y, clock_r, clock_w/4, 60, 420, s, 59, main_fg)
-    ring_clockwise(clock_x, clock_y, clock_r+7, clock_w/2, -60, 300, m, 59, main_fg)
-    ring_clockwise(clock_x, clock_y, clock_r+18, clock_w, 0, 360, h, 23, main_fg)
+    ring_clockwise(settings.clock.x, settings.clock.y, settings.clock.radius, settings.clock.width/4, 60, 420, s, 59, main_fg)
+    ring_clockwise(settings.clock.x, settings.clock.y, settings.clock.radius+7, settings.clock.width/2, -60, 300, m, 59, main_fg)
+    ring_clockwise(settings.clock.x, settings.clock.y, settings.clock.radius+18, settings.clock.width, 0, 360, h, 23, main_fg)
 
-    write_bold(clock_x-90, clock_y-10, h, clock_font_h, main_text_color)
-    write(clock_x-10, clock_y+80, m, clock_font_m, main_text_color)
-    write(clock_x-50, clock_y+10, date, 12, main_text_color)
-    write(clock_x-50, clock_y+115, "Uptime: " .. uptime_short(), 11, main_text_color)
+    write_bold(settings.clock.x-90, settings.clock.y-10, h, settings.clock.font_height, main_text_color)
+    write(settings.clock.x-10, settings.clock.y+80, m, settings.clock.font_m, main_text_color)
+    write(settings.clock.x-50, settings.clock.y+10, date, 12, main_text_color)
+    write(settings.clock.x-50, settings.clock.y+115, "Uptime: " .. uptime_short(), 11, main_text_color)
 end
 
 
@@ -145,31 +158,31 @@ function draw_disks()
     local rt_text = string.format("Root: %s / %s (%s)", fs_used("/"), fs_size("/"), fs_free("/"))
     local hm_text = string.format("Home: %s / %s (%s)", fs_used("/home"), fs_size("/home"), fs_free("/home"))
 
-    ring_anticlockwise(dsk_x, dsk_y, dsk_r, dsk_thick, dsk_ang_begin, dsk_ang_end, rt, 100, color_frompercent(tonumber(rt)))
-    ring_anticlockwise(dsk_x, dsk_y, dsk_r-22, dsk_thick, dsk_ang_begin, dsk_ang_end, hm, 100, color_frompercent(tonumber(hm)))
+    ring_anticlockwise(settings.disk.x, settings.disk.y, settings.disk.radius, settings.disk.thickness, settings.disk.begin_angle, settings.disk.end_angle, rt, 100, color_frompercent(tonumber(rt)))
+    ring_anticlockwise(settings.disk.x, settings.disk.y, settings.disk.radius-22, settings.disk.thickness, settings.disk.begin_angle, settings.disk.end_angle, hm, 100, color_frompercent(tonumber(hm)))
 
-    write(dsk_x+45, dsk_y-dsk_r+10, rt_text, 11, main_text_color)
-    write(dsk_x+40, dsk_y-dsk_r+35, hm_text, 11, main_text_color)
+    write(settings.disk.x+45, settings.disk.y-settings.disk.radius+10, rt_text, 11, main_text_color)
+    write(settings.disk.x+40, settings.disk.y-settings.disk.radius+35, hm_text, 11, main_text_color)
 
     local dsk_info = {
         "Read:  " .. diskio_read(""),
         "Write: " .. diskio_write(""),
     }
-    write_line_by_line(dsk_x-40, dsk_y-10, 20, dsk_info, main_text_color, 12)
+    write_line_by_line(settings.disk.x-40, settings.disk.y-10, 20, dsk_info, main_text_color, 12)
 
 end
 
 
 function draw_net()
-    ring_clockwise(net_x, net_y, net_radius, 15, net_ang_begin, net_ang_end, download_speed_kb(), download_rate_maximum, main_fg)
-    ring_clockwise(net_x, net_y, net_radius-18, 15, net_ang_begin, net_ang_end, upload_speed_kb(), upload_rate_maximum, main_fg)
+    ring_clockwise(settings.net.x, settings.net.y, settings.net.radius, 15, settings.net.begin_angle, settings.net.end_angle, download_speed_kb(), download_rate_maximum, main_fg)
+    ring_clockwise(settings.net.x, settings.net.y, settings.net.radius-18, 15, settings.net.begin_angle, settings.net.end_angle, upload_speed_kb(), upload_rate_maximum, main_fg)
 
-    write(net_x-65, net_y-115, "▼ ".. download_speed(), 12, main_text_color)
-    write(net_x-65, net_y-95, "▲ "..upload_speed(), 12, main_text_color)
+    write(settings.net.x-65, settings.net.y-115, "▼ ".. download_speed(), 12, main_text_color)
+    write(settings.net.x-65, settings.net.y-95, "▲ "..upload_speed(), 12, main_text_color)
 
-    write(net_x-50, net_y, "Total ", 12, main_text_color)
-    write(net_x, net_y-10, "▼".. download_total(), 12, main_text_color)
-    write(net_x, net_y+10, "▲"..upload_total(), 12, main_text_color)
+    write(settings.net.x-50, settings.net.y, "Total ", 12, main_text_color)
+    write(settings.net.x, settings.net.y-10, "▼".. download_total(), 12, main_text_color)
+    write(settings.net.x, settings.net.y+10, "▲"..upload_total(), 12, main_text_color)
 
     local inf = {
         "SSID:           " .. string.sub(ssid(), 0, 15),
@@ -179,30 +192,30 @@ function draw_net()
 --         "Total Download: " .. download_total(),
 --         "Total Upload:   " .. upload_total(),
     }
-    write_line_by_line(net_x-350, net_y-60, 20, inf, main_text_color, 12)
+    write_line_by_line(settings.net.x-350, settings.net.y-60, 20, inf, main_text_color, 12)
 end
 
 
 function draw_battery()
     local bat = battery_percent()
-    local bat1 = battery1_percent()
-    local bat2 = battery2_percent()
-    ring_anticlockwise(bat_x, bat_y, battery_radius, bat_w , bat_beg, bat_end, bat, 100, color_frompercent_reverse(tonumber(bat)))
-    write(batperc_x-30, batperc_y+3, bat .. "%", 15, main_text_color)
-    write(battitle_x, battitle_y, "Battery", 15, main_text_color)
+    -- local bat1 = battery1_percent()
+    -- local bat2 = battery2_percent()
+    ring_anticlockwise(settings.battery.x, settings.battery.y, settings.battery.radius, settings.battery.width , settings.battery.begin, settings.battery.end_, bat, 100, color_frompercent_reverse(tonumber(bat)))
+    write(settings.battery.x_perc-30, settings.battery.y_perc+3, bat .. "%", 15, main_text_color)
+    write(settings.battery.x_title, settings.battery.y_title, "Battery", 15, main_text_color)
 
     -- if has_second_battery then
-        -- ring_anticlockwise(bat_x, bat_y, battery_radius-7, 1 , bat_beg-2, bat_end+2, bat1, 100, color_frompercent_reverse(tonumber(bat1)))
-        -- ring_anticlockwise(bat_x, bat_y, battery_radius+7, 1 , bat_beg-2, bat_end+2, bat2, 100, color_frompercent_reverse(tonumber(bat2)))
+        -- ring_anticlockwise(settings.battery.x, settings.battery.y, settings.battery.radius-7, 1 , settings.battery.begin-2, settings.battery.end_+2, bat1, 100, color_frompercent_reverse(tonumber(bat1)))
+        -- ring_anticlockwise(settings.battery.x, settings.battery.y, settings.battery.radius+7, 1 , settings.battery.begin-2, settings.battery.end_+2, bat2, 100, color_frompercent_reverse(tonumber(bat2)))
     -- end
 end
 
 
 function draw_titles()
-    write(cpu_x-20, cpu_y+80, "CPU", 18, main_text_color)
-    write(net_x-35, net_y+80, "Internet", 15, main_text_color)
-    write(memtext_x+60, memtext_y+170, "Memory", 18, main_text_color)
-    write(dsk_x+100, dsk_y-dsk_r+130, "Hard Disk", 15, main_text_color)
+    write(settings.cpu.x-20, settings.cpu.y+80, "CPU", 18, main_text_color)
+    write(settings.net.x-35, settings.net.y+80, "Internet", 15, main_text_color)
+    write(settings.mem.text_x+60, settings.mem.text_y+170, "Memory", 18, main_text_color)
+    write(settings.disk.x+100, settings.disk.y-settings.disk.radius+130, "Hard Disk", 15, main_text_color)
 end
 
 
