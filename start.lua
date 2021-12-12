@@ -2,7 +2,7 @@
 -- Author:      Zineddine SAIBI
 -- Software:    Auzia Conky
 -- Type:        Conky Theme
--- Version:     0.2 (10 Dec 2021)
+-- Version:     0.3 (12 Dec 2021)
 -- License:     GPL-3.0
 -- repository:  https://www.github.com/SZinedine/auzia-conky
 ----------------------------------
@@ -75,8 +75,8 @@ function start()
     draw_disks()
     if has_battery      then draw_battery() end
     if to_draw_titles   then draw_titles()  end
-    if fetch_public_ip then
-        -- check the ip adress every x seconds (check the variable public_ip_refresh_rate)
+    if use_public_ip then
+        -- check the ip adress every x seconds (check the variable public_ip_refresh_rate, default: 60 seconde)
         if public_ip == nil or public_ip == "None" or (updates()%public_ip_refresh_rate) == 0 then
             public_ip = fetch_public_ip()
         end
@@ -184,14 +184,13 @@ function draw_net()
     write(settings.net.x, settings.net.y-10, "▼".. download_total(), 12, main_text_color)
     write(settings.net.x, settings.net.y+10, "▲"..upload_total(), 12, main_text_color)
 
-    local inf = {
-        "SSID:           " .. string.sub(ssid(), 0, 15),
-        "Wifi Signal:    " .. wifi_signal() .. "%",
-        "Public IP:      " .. tostring(public_ip),
-        "Local IP:       " .. local_ip(),
---         "Total Download: " .. download_total(),
---         "Total Upload:   " .. upload_total(),
-    }
+    local inf = {}
+    table.insert(inf, "SSID: " .. string.sub(ssid(), 0, 15))
+    table.insert(inf, "Wifi Signal:    " .. wifi_signal() .. "%")
+    if use_public_ip then
+        table.insert(inf, "Public IP:      " .. tostring(public_ip))
+    end
+    table.insert(inf, "Local IP:       " .. local_ip())
     write_line_by_line(settings.net.x-350, settings.net.y-60, 20, inf, main_text_color, 12)
 end
 

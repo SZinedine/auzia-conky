@@ -52,7 +52,7 @@ There is no need to refresh it every second like the other values
 advice: use the variable public_ip instead of the function public_ip()
 which is called every `public_ip_refresh_rate` secondes
 ]]
-fetch_public_ip = false
+use_public_ip = true
 public_ip_refresh_rate = 60     -- secondes
 public_ip = nil
 

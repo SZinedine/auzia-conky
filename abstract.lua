@@ -315,6 +315,8 @@ end
 function fetch_public_ip()
     local po = io.popen("wget http://ipinfo.io/ip -qO -")
     -- local po = io.popen("curl -s ifconfig.me/ip")
+    -- local po = io.popen("curl -s ident.me")
+    -- local po = io.popen("curl -s api.ipify.org")
     local content = po:read("*a")
     if content == nil or content == "" or string.len(content) > 15  then
         return "None"
