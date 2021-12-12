@@ -148,6 +148,21 @@ elseif THEME == "cyan light" then
     color4 = 0xFF0000   -- foreground modifier: critical color
     color5 = 0x1D1D1D   -- text color
 
+elseif THEME == "gruvbox dark" then
+    color0 = 0x282828   -- background of widgets
+    color1 = 0xebdbb2   -- foreground of widgets (main color of progression bars)
+    color2 = 0xebdbb2   -- second color
+    color3 = 0xfe8019   -- foreground modifier: warning color
+    color4 = 0xcc241d   -- foreground modifier: critical color
+    color5 = 0xfbf1c7   -- text color
+elseif THEME == "gruvbox light" then
+    color0 = 0xfbf1c7   -- background of widgets
+    color1 = 0x3c3836   -- foreground of widgets (main color of progression bars)
+    color2 = 0x3c3836   -- second color
+    color3 = 0xd65D0E   -- foreground modifier: warning color
+    color4 = 0xcc241D   -- foreground modifier: critical color
+    color5 = 0x282828   -- text color
+
 else
     color0 = nil        -- background of widgets
     color1 = nil        -- foreground of widgets (main color of progression bars)
@@ -183,7 +198,7 @@ if use_warning_color then color_warning = color3
 else color_warning = color3
 end
 
-if use_critical_color then color_critical = color3
+if use_critical_color then color_critical = color4
 else color_critical = color_warning
 end
 
