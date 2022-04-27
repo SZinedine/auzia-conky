@@ -197,16 +197,9 @@ end
 
 function draw_battery()
     local bat = battery_percent()
-    -- local bat1 = battery1_percent()
-    -- local bat2 = battery2_percent()
     ring_anticlockwise(settings.battery.x, settings.battery.y, settings.battery.radius, settings.battery.width , settings.battery.begin, settings.battery.end_, bat, 100, color_frompercent_reverse(tonumber(bat)))
     write(settings.battery.x_perc-30, settings.battery.y_perc+3, bat .. "%", 15, main_text_color)
     write(settings.battery.x_title, settings.battery.y_title, "Battery", 15, main_text_color)
-
-    -- if has_second_battery then
-        -- ring_anticlockwise(settings.battery.x, settings.battery.y, settings.battery.radius-7, 1 , settings.battery.begin-2, settings.battery.end_+2, bat1, 100, color_frompercent_reverse(tonumber(bat1)))
-        -- ring_anticlockwise(settings.battery.x, settings.battery.y, settings.battery.radius+7, 1 , settings.battery.begin-2, settings.battery.end_+2, bat2, 100, color_frompercent_reverse(tonumber(bat2)))
-    -- end
 end
 
 
@@ -230,7 +223,12 @@ function conky_main()
                                          conky_window.height)
     cr = cairo_create(cs)
 
-    if tonumber(updates()) > time_before_start then
+    local updates_ = tonumber(updates())
+
+    if updates_ > time_before_start then
+        if updates_ > time_before_start + 3 and initialized_battery == false then
+            init_battery()
+        end
         start()
     end
 

@@ -336,22 +336,30 @@ battery_percent    = nil   -- function that returns the value of the battery. ad
 battery1_index     = nil   -- index of the first battery. nil if there is no battery. This is the number that follows 'BAT' ex: 'BAT0'
 battery2_index     = nil   -- index of the second battery. nil if there is no battery or no second battery
 discharging_battery = function() return false end  -- check if the battery is discharging or not
+initialized_battery = false -- check if the function `init_battery()` has already been called
 
 -- check if there is a battery or multiple batteries
 -- define the functions that return battery values
 -- define discharging_battery() according to the number of batteries
-local function init_battery()
+function init_battery()
+    initialized_battery = true
     local bat_indexes = {}
     local size = 0          -- how many batteries found
-    if parse("battery_percent BAT0") ~= nil then 
+
+    -- determine how many batteries by calling them (even if it will print out error messages)
+    local bt0 = parse("battery_percent BAT0")
+    local bt1 = parse("battery_percent BAT1")
+    local bt2 = parse("battery_percent BAT2")
+
+    if bt0 ~= nil and bt0 ~= "0" then 
         table.insert(bat_indexes, 0) 
         size = size + 1
     end
-    if parse("battery_percent BAT1") ~= nil then 
+    if bt1 ~= nil and bt1 ~= "0" then 
         table.insert(bat_indexes, 1) 
         size = size + 1
     end
-    if parse("battery_percent BAT2") ~= nil then 
+    if bt2 ~= nil and bt2 ~= "0" then 
         table.insert(bat_indexes, 2) 
         size = size + 1
     end
@@ -391,5 +399,4 @@ local function init_battery()
         end
     end
 end
-init_battery()
 
