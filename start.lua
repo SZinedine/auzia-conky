@@ -20,19 +20,733 @@ settings    = {
     net     = {}
 }
 
-settings.cpu.x                = 200
-settings.cpu.y                = 200
-settings.cpu.radius_temp      = 183
-settings.cpu.temp_begin_angle = 45
-settings.cpu.temp_end_angle   = -300
-settings.cpu.c1_radius        = 160
-settings.cpu.c2_radius        = 139
-settings.cpu.c3_radius        = 120
-settings.cpu.c4_radius        = 103
-settings.cpu.begin_angle      = 0
-settings.cpu.end_angle        = -260
+settings.cpu = {
+    x = 200,
+    y = 200,
+    begin_angle = 0,
+    end_angle = -260,
+
+    cores = {
+        _0cores = {             -- display only total cpu usage
+            total = {
+                number = 0,
+                radius = 130,
+                thickness = 35,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 75,
+                    post_particle = "%"
+                }
+            },
+            temperature = {
+                number = -1,
+                radius = 163,
+                thickness = 10,
+                max_value = 95,
+                begin_angle = 45,
+                end_angle = -300,
+                text = {
+                    x = 315,
+                    y = 110,
+                    post_particle = "°C"
+                }
+            },
+
+        },
+
+
+        _2cores = {
+            core1 = {
+                number = 1,
+                radius = 123,
+                thickness = 24,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 80,
+                    post_particle = "%"
+                }
+            },
+            core2 = {
+                number = 2,
+                radius = 150,
+                thickness = 26,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 55,
+                    post_particle = "%"
+                }
+            },
+            total = {
+                number = 0,
+                radius = 171,
+                thickness = 10,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = nil
+            },
+            temperature = {     -- what differentiates it from the other ones is number = -1
+                number = -1,
+                radius = 183,
+                thickness = 3,
+                max_value = 95,
+                begin_angle = 45,
+                end_angle = -300,
+                text = {
+                    x = 330,
+                    y = 90,
+                    post_particle = "°C"
+                }
+            },
+
+        },
+
+
+        _4cores = {
+            core1 = {
+                number = 1,
+                radius = 103,
+                thickness = 15,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 100,
+                    post_particle = "%"
+                }
+            },
+            core2 = {
+                number = 2,
+                radius = 120,
+                thickness = 16,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 85,
+                    post_particle = "%"
+                }
+            },
+            core3 = {
+                number = 3,
+                radius = 139,
+                thickness = 18,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 68,
+                    post_particle = "%"
+                }
+            },
+            core4 = {
+                number = 4,
+                radius = 160,
+                thickness = 20,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 45,
+                    post_particle = "%"
+                }
+            },
+            total = {
+                number = 0,
+                radius = 175,
+                thickness = 5,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = nil
+            },
+            temperature = {     -- what differentiates it from the other ones is number = -1
+                number = -1,
+                radius = 183,
+                thickness = 3,
+                max_value = 95,
+                begin_angle = 45,
+                end_angle = -300,
+                text = {
+                    x = 330,
+                    y = 90,
+                    post_particle = "°C"
+                }
+            },
+        },
+
+
+        _6cores = {
+            core1 = {
+                number = 1,
+                radius = 94,
+                thickness = 12,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 110,
+                    post_particle = "%"
+                }
+            },
+            core2 = {
+                number = 2,
+                radius = 107,
+                thickness = 12,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 95,
+                    post_particle = "%"
+                }
+            },
+            core3 = {
+                number = 3,
+                radius = 121,
+                thickness = 14,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 80,
+                    post_particle = "%"
+                }
+            },
+            core4 = {
+                number = 4,
+                radius = 137,
+                thickness = 15,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 63,
+                    post_particle = "%"
+                }
+            },
+            core5 = {
+                number = 5,
+                radius = 154,
+                thickness = 16,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 45,
+                    post_particle = "%"
+                }
+            },
+            core6 = {
+                number = 6,
+                radius = 172,
+                thickness = 17,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 27,
+                    post_particle = "%"
+                }
+            },
+            total = {
+                number = 0,
+                radius = 184,
+                thickness = 4,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = nil
+            },
+            temperature = {     -- what differentiates it from the other ones is number = -1
+                number = -1,
+                radius = 190,
+                thickness = 3,
+                max_value = 95,
+                begin_angle = 45,
+                end_angle = -300,
+                text = {
+                    x = 337,
+                    y = 89,
+                    post_particle = "°C"
+                }
+            },
+        },
+
+
+        _8cores = {
+            core1 = {
+                number = 1,
+                radius = 88,
+                thickness = 9,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 119,
+                    post_particle = "%"
+                }
+            },
+            core2 = {
+                number = 2,
+                radius = 99,
+                thickness = 9,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 106,
+                    post_particle = "%"
+                }
+            },
+            core3 = {
+                number = 3,
+                radius = 109,
+                thickness = 9,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 94,
+                    post_particle = "%"
+                }
+            },
+            core4 = {
+                number = 4,
+                radius = 120,
+                thickness = 10,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 82,
+                    post_particle = "%"
+                }
+            },
+            core5 = {
+                number = 5,
+                radius = 132,
+                thickness = 11,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 70,
+                    post_particle = "%"
+                }
+            },
+            core6 = {
+                number = 6,
+                radius = 145,
+                thickness = 12,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 56,
+                    post_particle = "%"
+                }
+            },
+            core7 = {
+                number = 7,
+                radius = 159,
+                thickness = 13,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 40,
+                    post_particle = "%"
+                }
+            },
+            core8 = {
+                number = 8,
+                radius = 174,
+                thickness = 14,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 27,
+                    post_particle = "%"
+                }
+            },
+            total = {
+                number = 0,
+                radius = 184,
+                thickness = 4,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = nil
+            },
+            temperature = {     -- what differentiates it from the other ones is number = -1
+                number = -1,
+                radius = 190,
+                thickness = 3,
+                max_value = 95,
+                begin_angle = 45,
+                end_angle = -300,
+                text = {
+                    x = 337,
+                    y = 89,
+                    post_particle = "°C"
+                }
+            },
+        },
+
+
+
+        _10cores = {
+            core1 = {
+                number = 1,
+                radius = 81,
+                thickness = 6,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 125,
+                    post_particle = "%"
+                }
+            },
+            core2 = {
+                number = 2,
+                radius = 88,
+                thickness = 6,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = nil
+            },
+            core3 = {
+                number = 3,
+                radius = 96,
+                thickness = 7,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 110,
+                    post_particle = "%"
+                }
+            },
+            core4 = {
+                number = 4,
+                radius = 105,
+                thickness = 8,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 95,
+                    post_particle = "%"
+                }
+            },
+            core5 = {
+                number = 5,
+                radius = 115,
+                thickness = 9,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = nil
+            },
+            core6 = {
+                number = 6,
+                radius = 126,
+                thickness = 10,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 80,
+                    post_particle = "%"
+                }
+            },
+            core7 = {
+                number = 7,
+                radius = 138,
+                thickness = 11,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 66,
+                    post_particle = "%"
+                }
+            },
+            core8 = {
+                number = 8,
+                radius = 151,
+                thickness = 12,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 52,
+                    post_particle = "%"
+                }
+            },
+            core9 = {
+                number = 9,
+                radius = 165,
+                thickness = 13,
+                max_value = 98,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 39,
+                    post_particle = "%"
+                }
+            },
+            core10 = {
+                number = 10,
+                radius = 180,
+                thickness = 14,
+                max_value = 98,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 23,
+                    post_particle = "%"
+                }
+            },
+            total = {
+                number = 0,
+                radius = 192,
+                thickness = 5,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = nil
+            },
+            temperature = {     -- what differentiates it from the other ones is number = -1
+                number = -1,
+                radius = 199,
+                thickness = 3,
+                max_value = 95,
+                begin_angle = 45,
+                end_angle = -300,
+                text = {
+                    x = 345,
+                    y = 85,
+                    post_particle = "°C"
+                }
+            },
+        },
+
+
+
+        _12cores = {
+            core1 = {
+                number = 1,
+                radius = 82,
+                thickness = 5,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 125,
+                    post_particle = "%"
+                }
+            },
+            core2 = {
+                number = 2,
+                radius = 88,
+                thickness = 5,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = nil
+            },
+            core3 = {
+                number = 3,
+                radius = 94,
+                thickness = 6,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 110,
+                    post_particle = "%"
+                }
+            },
+            core4 = {
+                number = 4,
+                radius = 102,
+                thickness = 8,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = nil
+            },
+            core5 = {
+                number = 5,
+                radius = 111,
+                thickness = 8,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 95,
+                    post_particle = "%"
+                }
+            },
+            core6 = {
+                number = 6,
+                radius = 120,
+                thickness = 9,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = nil
+            },
+            core7 = {
+                number = 7,
+                radius = 130,
+                thickness = 9,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 80,
+                    post_particle = "%"
+                }
+            },
+            core8 = {
+                number = 8,
+                radius = 141,
+                thickness = 10,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 65,
+                    post_particle = "%"
+                }
+            },
+            core9 = {
+                number = 9,
+                radius = 152,
+                thickness = 10,
+                max_value = 98,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 52,
+                    post_particle = "%"
+                }
+            },
+            core10 = {
+                number = 10,
+                radius = 163,
+                thickness = 10,
+                max_value = 98,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 40,
+                    post_particle = "%"
+                }
+            },
+            core11 = {
+                number = 11,
+                radius = 174,
+                thickness = 10,
+                max_value = 98,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 28,
+                    post_particle = "%"
+                }
+            },
+            core12 = {
+                number = 12,
+                radius = 186,
+                thickness = 11,
+                max_value = 98,
+                begin_angle = 0,
+                end_angle = -260,
+                text = {
+                    x = 205,
+                    y = 17,
+                    post_particle = "%"
+                }
+            },
+            total = {
+                number = 0,
+                radius = 195,
+                thickness = 2,
+                max_value = 100,
+                begin_angle = 0,
+                end_angle = -260,
+                text = nil
+            },
+            temperature = {     -- what differentiates it from the other ones is number = -1
+                number = -1,
+                radius = 199,
+                thickness = 2,
+                max_value = 95,
+                begin_angle = 45,
+                end_angle = -300,
+                text = {
+                    x = 345,
+                    y = 85,
+                    post_particle = "°C"
+                }
+            },
+        },
+    }
+}
+
+
 settings.mem.x                = 1020
-settings.mem.y                = settings.cpu.y
+settings.mem.y                = 200
 settings.mem.mem_radius       = 160
 settings.mem.swap_radius      = settings.mem.mem_radius - 20
 settings.mem.text_x           = settings.mem.x - 90
@@ -67,6 +781,21 @@ settings.net.begin_angle      = 0
 settings.net.end_angle        = 320
 
 
+-- set the appropriate cpu object according to the chosen value for `cpu_cores`
+local ncores = nil
+cpu_cores = 0
+if     cpu_cores == 0  then ncores = settings.cpu.cores._0cores
+elseif cpu_cores == 2  then ncores = settings.cpu.cores._2cores
+elseif cpu_cores == 4  then ncores = settings.cpu.cores._4cores
+elseif cpu_cores == 6  then ncores = settings.cpu.cores._6cores
+elseif cpu_cores == 8  then ncores = settings.cpu.cores._8cores
+elseif cpu_cores == 10 then ncores = settings.cpu.cores._10cores
+elseif cpu_cores == 12 then ncores = settings.cpu.cores._12cores
+else 
+    print("ERROR. the provided value of cpu_cores is not valid. Defaulting to 4 cores")
+    ncores = settings.cpu.cores._4cores
+end
+
 function start()
     draw_cpu()
     draw_memory()
@@ -97,26 +826,26 @@ function draw_lines()
 end
 
 
-function draw_cpu()
-    local tmp = cpu_temperature()
-    local cpu = cpu_percent("")
-    local cpu1 = cpu_percent(1)
-    local cpu2 = cpu_percent(2)
-    local cpu3 = cpu_percent(3)
-    local cpu4 = cpu_percent(4)
-    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.radius_temp, 3, settings.cpu.temp_begin_angle, settings.cpu.temp_end_angle, tmp, 95, color_frompercent(tonumber(tmp)))
-    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.c1_radius+15, 5, settings.cpu.begin_angle, settings.cpu.end_angle, cpu, 100, color_frompercent(tonumber(cpu)))    -- total CPU
-    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.c1_radius, 20, settings.cpu.begin_angle, settings.cpu.end_angle, cpu1, 100, color_frompercent(tonumber(cpu1)))
-    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.c2_radius, 18, settings.cpu.begin_angle, settings.cpu.end_angle, cpu2, 100, color_frompercent(tonumber(cpu2)))
-    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.c3_radius, 16, settings.cpu.begin_angle, settings.cpu.end_angle, cpu3, 100, color_frompercent(tonumber(cpu3)))
-    ring_anticlockwise(settings.cpu.x, settings.cpu.y, settings.cpu.c4_radius, 15, settings.cpu.begin_angle, settings.cpu.end_angle, cpu4, 100, color_frompercent(tonumber(cpu4)))
+function draw_single_cpu_core(coreN)
+    local val = nil
+    if coreN.number >= 0 then val = cpu_percent(coreN.number)
+    else val = cpu_temperature() -- shoul
+    end
 
-    write(330, 90, tmp .. "°C", 12, main_text_color)
-    write(205, 45, cpu1 .. "%", 12, main_text_color)
-    write(205, 68, cpu2 .. "%", 12, main_text_color)
-    write(205, 85, cpu3 .. "%", 12, main_text_color)
-    write(205, 100, cpu4 .. "%", 12, main_text_color)
-    write_list_proccesses_cpu(160, 140, 20, 4, 12, main_text_color)
+    ring_anticlockwise(settings.cpu.x, settings.cpu.y, coreN.radius, coreN.thickness, coreN.begin_angle, coreN.end_angle, val, coreN.max_value, color_frompercent(tonumber(val)))
+
+    if coreN.text ~= nil then
+        write(coreN.text.x, coreN.text.y, val .. coreN.text.post_particle, 12, main_text_color)
+    end
+end
+
+
+function draw_cpu()
+    for i in pairs(ncores) do
+        draw_single_cpu_core(ncores[i])
+    end
+
+    write_list_proccesses_cpu(160, 147, 20, 4, 12, main_text_color)
 end
 
 
@@ -204,8 +933,8 @@ end
 
 
 function draw_titles()
-    write(settings.cpu.x-20, settings.cpu.y+80, "CPU", 18, main_text_color)
-    write(settings.net.x-35, settings.net.y+80, "Internet", 15, main_text_color)
+    write(180, 270, "CPU", 18, main_text_color)
+    write(325, settings.net.y+80, "Internet", 15, main_text_color)
     write(settings.mem.text_x+60, settings.mem.text_y+170, "Memory", 18, main_text_color)
     write(settings.disk.x+100, settings.disk.y-settings.disk.radius+130, "Hard Disk", 15, main_text_color)
 end

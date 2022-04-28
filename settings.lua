@@ -24,6 +24,7 @@ use_critical_color = true
 
 --[[
 CPU Cores (threads really)
+valid values are: 0, 2, 4, 6, 8, 10, 12
 ]]
 cpu_cores = 4
 

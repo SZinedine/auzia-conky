@@ -283,8 +283,8 @@ function diskio_read(device)    return parse("diskio_read " .. device) end
 function diskio_write(device)   return parse("diskio_write " .. device) end
 function cpu_temperature()      return parse("acpitemp") end                --  temperature in C°
 function cpu_percent(n)
-    if n == nil or n == "" then return parse("cpu") end
-    if n > 0 and n <= 8    then return parse("cpu cpu" .. n)
+    if n == nil or n == 0 or n == "" then return parse("cpu") end
+    if n > 0 and n <= 32    then return parse("cpu cpu" .. n)
     else                        return nil end
 end
 function fs_used(fs)
