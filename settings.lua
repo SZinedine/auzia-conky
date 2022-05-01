@@ -7,6 +7,7 @@ possible values of THEME
     yellow  dark      yellow light
     purple dark       purple light
     cyan  dark        cyan light
+    gruvbox  dark     gruvbox light
 ]]
 THEME = "blue dark"     -- choose one of the above
 
@@ -14,17 +15,17 @@ THEME = "blue dark"     -- choose one of the above
 waiting time before starting conky
 this prevents issues when conky is launched at startup
 ]]
-time_before_start = 5           -- secondes
+startup_delay = 5           -- secondes
 
 --[[
 change colors when a value exceeds defined thresholds
 ]]
-use_warning_color  = true
-use_critical_color = true
+change_color_on_threshold = true
 
 --[[
 CPU Cores (threads really)
-valid values are: 0, 2, 4, 6, 8, 10, 12
+supported: 0, 2, 4, 6, 8, 10, 12
+the value 0 is to display only the total cpu usage.
 ]]
 cpu_cores = 4
 
@@ -52,10 +53,12 @@ the public ip is fetched from the internet.
 There is no need to refresh it every second like the other values
 advice: use the variable public_ip instead of the function public_ip()
 which is called every `public_ip_refresh_rate` secondes
+
+WARNING: this feature exploits third party services,
+therefore we cannot garantee your privacy if you turn it on
 ]]
-use_public_ip = true
+use_public_ip = false
 public_ip_refresh_rate = 60     -- secondes
-public_ip = nil
 
 ----------------------------------------------
 
@@ -183,6 +186,16 @@ main_fg_alpha   = 0.8
 main_bg         = color0
 main_fg         = color1
 main_text_color = color5
+color_warning   = nil
+color_critical  = nil
+
+if change_color_on_threshold then
+    color_warning  = color3
+    color_critical = color4
+else
+    color_warning  = color1
+    color_critical = color1
+end
 
 -- threshold variables are used to change the colors of the indicators
 -- by using the functions color_frompercent(perc) and color_frompercent_reverse(perc)
@@ -191,15 +204,4 @@ threshold_critical         = 80
 battery_threshold_warning  = 30
 battery_threshold_critical = 18
 
-color_normal               = main_fg
-color_warning              = nil
-color_critical             = nil
-
-if use_warning_color then color_warning = color3
-else color_warning = color3
-end
-
-if use_critical_color then color_critical = color4
-else color_critical = color_warning
-end
 
