@@ -7,9 +7,9 @@
 -- Repository:  https://www.github.com/SZinedine/namoudaj-conky
 ----------------------------------
 
-require "cairo"
-require "imlib2"
-
+require("cairo")
+require("imlib2")
+require("settings")
 
 function image(x, y, file)
     if file == nil then return end
@@ -43,12 +43,12 @@ function ring_clockwise(x, y, radius, thickness, angle_begin, angle_end, value_s
     local progress = (value / max_value) * (angle_end - angle_begin)
 
     cairo_set_line_width (cr, thickness)
-    cairo_set_source_rgba (cr, color_convert(main_bg, main_bg_alpha))
+    cairo_set_source_rgba (cr, color_convert(colors.bg, colors.bg_alpha))
     cairo_arc (cr, x, y, radius, angle_begin, angle_end)
     cairo_stroke (cr)
 
     cairo_set_line_width (cr, thickness)
-    cairo_set_source_rgba (cr, color_convert(fg_color, main_fg_alpha))
+    cairo_set_source_rgba (cr, color_convert(fg_color, colors.fg_alpha))
     cairo_arc(cr, x, y, radius, angle_begin, angle_begin + progress)
     cairo_stroke (cr)
 end
@@ -63,12 +63,12 @@ function ring_anticlockwise(x, y, radius, thickness, angle_begin, angle_end, val
     local progress = (value / max_value) * (angle_end - angle_begin)
 
     cairo_set_line_width (cr, thickness)
-    cairo_set_source_rgba (cr, color_convert(main_bg, main_bg_alpha))
+    cairo_set_source_rgba (cr, color_convert(colors.bg, colors.bg_alpha))
     cairo_arc_negative (cr, x, y, radius, angle_begin, angle_end)
     cairo_stroke (cr)
 
     cairo_set_line_width (cr, thickness)
-    cairo_set_source_rgba (cr, color_convert(fg_color, main_fg_alpha))
+    cairo_set_source_rgba (cr, color_convert(fg_color, colors.fg_alpha))
     cairo_arc_negative (cr, x, y, radius, angle_begin, angle_begin + progress)
     cairo_stroke (cr)
 end
@@ -78,12 +78,12 @@ function rectangle_leftright(x, y, len, thick, value_str, max_value, color)
     local value = tonumber(value_str)
     if value > max_value then value = max_value end
 
-    cairo_set_source_rgba(cr, color_convert(main_bg, main_bg_alpha))
+    cairo_set_source_rgba(cr, color_convert(colors.bg, colors.bg_alpha))
     cairo_rectangle(cr, x, y, len, thick)
     cairo_fill(cr)
 
     local progress = (len / max_value) * value
-    cairo_set_source_rgba(cr, color_convert(color, main_fg_alpha))
+    cairo_set_source_rgba(cr, color_convert(color, colors.fg_alpha))
     cairo_rectangle(cr, x, y, progress, thick)
     cairo_fill(cr)
 end
@@ -98,10 +98,10 @@ function rectangle_bottomup(x, y, len, thick, value_str, max_value, color)
     local value = tonumber(value_str)
     if value > max_value then value = max_value end
 
-    cairo_set_source_rgba(cr, color_convert(main_bg, main_bg_alpha))
+    cairo_set_source_rgba(cr, color_convert(colors.bg, colors.bg_alpha))
     cairo_rectangle(cr, x, y, thick, -len)
     cairo_fill(cr)
-    cairo_set_source_rgba(cr, color_convert(color, main_fg_alpha))
+    cairo_set_source_rgba(cr, color_convert(color, colors.fg_alpha))
 
     local progress = (len / max_value) * value
     cairo_rectangle(cr, x, y, thick, -progress)
@@ -194,9 +194,9 @@ end
 -- the colors are defined in "settings.lua"
 function color_frompercent(percent)
     local perc = tonumber(percent)
-    if     perc > threshold_critical then return color_critical
-    elseif perc > threshold_warning  then return color_warning
-    else                                  return main_fg
+    if     perc > threshold_critical then return colors.critic
+    elseif perc > threshold_warning  then return colors.warn
+    else                                  return colors.fg
     end
 end
 
@@ -205,9 +205,9 @@ end
 -- for example, change the color when the battery is low
 function color_frompercent_reverse(percent)
     local perc = tonumber(percent)
-    if      perc < battery_threshold_critical then return color_critical
-    elseif  perc < battery_threshold_warning  then return color_warning
-    else                                           return main_fg
+    if      perc < battery_threshold_critical then return colors.critic
+    elseif  perc < battery_threshold_warning  then return colors.warn
+    else                                           return colors.fg
     end
 end
 
@@ -281,6 +281,23 @@ function diskio(device)         return parse("diskio " .. device) end       --  
 function diskio_read(device)    return parse("diskio_read " .. device) end
 function diskio_write(device)   return parse("diskio_write " .. device) end
 function cpu_temperature()      return parse("acpitemp") end                --  temperature in C°
+function cpu_temperature_sensors()                                          -- this function uses the command 'sensors' to obtain the cpu temperature
+    local file = io.popen("sensors | awk '/CPU: / {printf substr($2,2,2)}' 2> /dev/null")
+    if not file then
+        io.stderr:write("Error while executing a command containing 'sensors' and 'awk'. Defaulting to cpu_temperature()\n")
+        return cpu_temperature()
+    end
+
+    local result = file:read("*a")
+    file:close()
+
+    if tonumber(result) == nil then
+        io.stderr:write("Error. Invalid result from 'sensors'. Defaulting to cpu_temperature()\n")
+        return cpu_temperature()
+    end
+
+    return result
+end
 function cpu_percent(n)
     if n == nil or n == 0 or n == "" then return parse("cpu") end
     if n > 0 and n <= 32    then return parse("cpu cpu" .. n)

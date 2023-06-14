@@ -1,13 +1,22 @@
+require("colors")
 
 --[[
 possible values of THEME
-    monochrome dark   monochrome light
     blue dark         blue light
+    deepblue dark     deepblue light
     green dark        green light
+    emerald dark      emerald light
     yellow  dark      yellow light
     purple dark       purple light
+    violet dark       violet light
+    crimson dark      crimson light
+    maroon dark       maroon light
+    pink dark         pink light
     cyan  dark        cyan light
+    aquamarine dark   aquamarine light
+    monochrome dark   monochrome light
     gruvbox  dark     gruvbox light
+    contrast dark     contrast light
 ]]
 THEME = "blue dark"     -- choose one of the above
 
@@ -24,8 +33,7 @@ change_color_on_threshold = true
 
 --[[
 CPU Cores (threads really)
-supported: 0, 2, 4, 6, 8, 10, 12
-the value 0 is to display only the total cpu usage.
+valid values are: 0, 2, 4, 6, 8, 10, 12
 ]]
 cpu_cores = 4
 
@@ -62,139 +70,11 @@ public_ip_refresh_rate = 60     -- secondes
 
 ----------------------------------------------
 
-if THEME == "monochrome dark" then
-    color0 = 0x484848   -- background of widgets
-    color1 = 0xDEDEDE   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = color1     -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0xDEDEDE   -- text color
-elseif THEME == "monochrome light" then
-    color0 = 0x252525   -- background of widgets
-    color1 = 0x151515   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = color1     -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0x1D1D1D   -- text color
+colors = get_color_table(THEME)
 
-elseif THEME == "blue dark" then
-    color0 = 0xA6A6A6   -- background of widgets
-    color1 = 0x5594FF   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = 0xFF9000   -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0xD1CDD5   -- text color
-elseif THEME == "blue light" then
-    color0 = 0x252525   -- background of widgets
-    color1 = 0x3A83FF   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = 0xFF9000   -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0x1D1D1D   -- text color
-
-elseif THEME == "green dark" then
-    color0 = 0xA6A6A6   -- background of widgets
-    color1 = 0x35BF5C   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = 0xFF9000   -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0xD1CDD5   -- text color
-elseif THEME == "green light" then
-    color0 = 0x252525   -- background of widgets
-    color1 = 0x35BF5C   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = 0xFF9000   -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0x1D1D1D   -- text color
-
-elseif THEME == "yellow dark" then
-    color0 = 0xA6A6A6   -- background of widgets
-    color1 = 0xFFF84A   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = 0xFF9000   -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0xD1CDD5   -- text color
-elseif THEME == "yellow light" then
-    color0 = 0x252525   -- background of widgets
-    color1 = 0xCBC200   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = 0xFF9000   -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0x1D1D1D   -- text color
-
-elseif THEME == "purple dark" then
-    color0 = 0xA6A6A6   -- background of widgets
-    color1 = 0xFF5FD0   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = 0xFF9000   -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0xD1CDD5   -- text color
-elseif THEME == "purple light" then
-    color0 = 0x252525   -- background of widgets
-    color1 = 0xD30095   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = 0xFF9000   -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0x1D1D1D   -- text color
-
-elseif THEME == "cyan dark" then
-    color0 = 0xA6A6A6   -- background of widgets
-    color1 = 0x48FFE7   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = 0xFF9000   -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0xD1CDD5   -- text color
-elseif THEME == "cyan light" then
-    color0 = 0x252525   -- background of widgets
-    color1 = 0x00C9AF   -- foreground of widgets (main color of progression bars)
-    color2 = 0x1D1D1D   -- second color
-    color3 = 0xFF9000   -- foreground modifier: warning color
-    color4 = 0xFF0000   -- foreground modifier: critical color
-    color5 = 0x1D1D1D   -- text color
-
-elseif THEME == "gruvbox dark" then
-    color0 = 0x282828   -- background of widgets
-    color1 = 0xebdbb2   -- foreground of widgets (main color of progression bars)
-    color2 = 0xebdbb2   -- second color
-    color3 = 0xfe8019   -- foreground modifier: warning color
-    color4 = 0xcc241d   -- foreground modifier: critical color
-    color5 = 0xfbf1c7   -- text color
-elseif THEME == "gruvbox light" then
-    color0 = 0xfbf1c7   -- background of widgets
-    color1 = 0x3c3836   -- foreground of widgets (main color of progression bars)
-    color2 = 0x3c3836   -- second color
-    color3 = 0xd65D0E   -- foreground modifier: warning color
-    color4 = 0xcc241D   -- foreground modifier: critical color
-    color5 = 0x282828   -- text color
-
-else
-    color0 = nil        -- background of widgets
-    color1 = nil        -- foreground of widgets (main color of progression bars)
-    color2 = nil        -- second color
-    color3 = nil        -- foreground modifier: warning color
-    color4 = nil        -- foreground modifier: critical color
-    color5 = nil        -- text color
-end
-
-
--- check if the colors are defined.
-colors_defined = color0 ~= nil and color1 ~= nil and color2 ~= nil and color3 ~= nil and color4~= nil and color5 ~= nil
-
--- unified background (bg) and foreground (fg) transparency (alpha)
-main_bg_alpha   = 0.2
-main_fg_alpha   = 0.8
-main_bg         = color0
-main_fg         = color1
-main_text_color = color5
-color_warning   = nil
-color_critical  = nil
-
-if change_color_on_threshold then
-    color_warning  = color3
-    color_critical = color4
-else
-    color_warning  = color1
-    color_critical = color1
+if change_color_on_threshold == false then
+    colors.warn  = colors.fg
+    colors.critic = colors.fg
 end
 
 -- threshold variables are used to change the colors of the indicators
@@ -203,5 +83,4 @@ threshold_warning          = 60
 threshold_critical         = 80
 battery_threshold_warning  = 30
 battery_threshold_critical = 18
-
 
