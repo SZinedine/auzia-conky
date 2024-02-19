@@ -39,7 +39,7 @@ end
 function draw_single_cpu_core(coreN)
     local val = nil
     if coreN.number >= 0 then val = cpu_percent(coreN.number)
-    else val = cpu_temperature_sensors() -- shoul
+    else val = cpu_temperature_sensors()
     end
 
     ring_anticlockwise(S.cpu.x, S.cpu.y, coreN.radius, coreN.thickness, coreN.begin_angle, coreN.end_angle, val, coreN.max_value, color_frompercent(tonumber(val)))
@@ -128,7 +128,7 @@ function draw_net()
     table.insert(inf, "Wifi Signal:    " .. wifi_signal() .. "%")
     table.insert(inf, "Local IP:       " .. local_ip())
     if use_public_ip then
-        if public_ip == nil or (updates()%public_ip_refresh_rate) == 0 then
+        if get_public_ip == nil or (updates()%public_ip_refresh_rate) == 0 then
             update_public_ip()
         end
         table.insert(inf, "Public IP:      " .. get_public_ip())

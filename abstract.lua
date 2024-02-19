@@ -2,7 +2,7 @@
 -- Author:      Zineddine SAIBI
 -- Software:    Namoudaj Conky
 -- Type:        Template for Conky
--- Version:     0.4
+-- Version:     0.5
 -- License:     GPL-3.0
 -- Repository:  https://www.github.com/SZinedine/namoudaj-conky
 ----------------------------------
@@ -11,8 +11,25 @@ require("cairo")
 require("imlib2")
 require("settings")
 
+---@alias font_slant_t
+---| "CAIRO_FONT_SLANT_NORMAL"
+---| "CAIRO_FONT_SLANT_ITALIC"
+---| "CAIRO_FONT_SLANT_OBLIQUE"
+
+
+---@alias font_weight_t
+---| "CAIRO_FONT_WEIGHT_NORMAL"
+---| "CAIRO_FONT_WEIGHT_BOLD"
+
+
+---place an image on the screen
+---@param x number
+---@param y number
+---@param file string
 function image(x, y, file)
-    if file == nil then return end
+    if file == nil then
+        return
+    end
 
     local show = imlib_load_image(file)
     if show == nil then return end
@@ -24,16 +41,36 @@ function image(x, y, file)
 end
 
 
+---draw a line
+--
+---@param startx number
+---@param starty number
+---@param endx   number
+---@param endy   number
+---@param thick  number
+---@param color  string
+---@param alpha  number
+--
 function line(startx, starty, endx, endy, thick, color, alpha)
-    cairo_set_line_width (cr, thick)
-    cairo_set_line_cap  (cr, CAIRO_LINE_CAP_BUTT)
-    cairo_set_source_rgba (cr, color_convert(color, alpha))
-    cairo_move_to (cr, startx, starty)
-    cairo_line_to (cr, endx, endy)
-    cairo_stroke (cr)
+    cairo_set_line_width(cr, thick)
+    cairo_set_line_cap (cr, CAIRO_LINE_CAP_BUTT)
+    cairo_set_source_rgba(cr, color_convert(color, alpha))
+    cairo_move_to(cr, startx, starty)
+    cairo_line_to(cr, endx, endy)
+    cairo_stroke(cr)
 end
 
 
+---draw a clockwise ring
+---@param x           number
+---@param y           number
+---@param radius      number
+---@param thickness   number
+---@param angle_begin number
+---@param angle_end   number
+---@param value_str   string
+---@param max_value   number
+---@param fg_color    string
 function ring_clockwise(x, y, radius, thickness, angle_begin, angle_end, value_str, max_value, fg_color)
     local value = tonumber(value_str)
     if value > max_value then value = max_value end
@@ -42,18 +79,28 @@ function ring_clockwise(x, y, radius, thickness, angle_begin, angle_end, value_s
     angle_end   = angle_end   * (2 * math.pi / 360) - (math.pi / 2)
     local progress = (value / max_value) * (angle_end - angle_begin)
 
-    cairo_set_line_width (cr, thickness)
-    cairo_set_source_rgba (cr, color_convert(colors.bg, colors.bg_alpha))
-    cairo_arc (cr, x, y, radius, angle_begin, angle_end)
-    cairo_stroke (cr)
+    cairo_set_line_width(cr, thickness)
+    cairo_set_source_rgba(cr, color_convert(colors.bg, colors.bg_alpha))
+    cairo_arc(cr, x, y, radius, angle_begin, angle_end)
+    cairo_stroke(cr)
 
-    cairo_set_line_width (cr, thickness)
-    cairo_set_source_rgba (cr, color_convert(fg_color, colors.fg_alpha))
+    cairo_set_line_width(cr, thickness)
+    cairo_set_source_rgba(cr, color_convert(fg_color, colors.fg_alpha))
     cairo_arc(cr, x, y, radius, angle_begin, angle_begin + progress)
-    cairo_stroke (cr)
+    cairo_stroke(cr)
 end
 
 
+---draw a anticlockwise ring
+---@param x           number
+---@param y           number
+---@param radius      number
+---@param thickness   number
+---@param angle_begin number
+---@param angle_end   number
+---@param value_str   string
+---@param max_value   number
+---@param fg_color    string
 function ring_anticlockwise(x, y, radius, thickness, angle_begin, angle_end, value_str, max_value, fg_color)
     local value = tonumber(value_str)
     if value > max_value then value = max_value end
@@ -62,18 +109,26 @@ function ring_anticlockwise(x, y, radius, thickness, angle_begin, angle_end, val
     angle_end   = angle_end   * (2 * math.pi / 360) - (math.pi / 2)
     local progress = (value / max_value) * (angle_end - angle_begin)
 
-    cairo_set_line_width (cr, thickness)
-    cairo_set_source_rgba (cr, color_convert(colors.bg, colors.bg_alpha))
-    cairo_arc_negative (cr, x, y, radius, angle_begin, angle_end)
-    cairo_stroke (cr)
+    cairo_set_line_width(cr, thickness)
+    cairo_set_source_rgba(cr, color_convert(colors.bg, colors.bg_alpha))
+    cairo_arc_negative(cr, x, y, radius, angle_begin, angle_end)
+    cairo_stroke(cr)
 
-    cairo_set_line_width (cr, thickness)
-    cairo_set_source_rgba (cr, color_convert(fg_color, colors.fg_alpha))
-    cairo_arc_negative (cr, x, y, radius, angle_begin, angle_begin + progress)
-    cairo_stroke (cr)
+    cairo_set_line_width(cr, thickness)
+    cairo_set_source_rgba(cr, color_convert(fg_color, colors.fg_alpha))
+    cairo_arc_negative(cr, x, y, radius, angle_begin, angle_begin + progress)
+    cairo_stroke(cr)
 end
 
 
+---draw a rectangle from left to right
+---@param   x           number
+---@param   y           number
+---@param   len         number
+---@param   thick       number
+---@param   value_str   string
+---@param   max_value   number
+---@param   color       string
 function rectangle_leftright(x, y, len, thick, value_str, max_value, color)
     local value = tonumber(value_str)
     if value > max_value then value = max_value end
@@ -89,11 +144,27 @@ function rectangle_leftright(x, y, len, thick, value_str, max_value, color)
 end
 
 
+---draw a rectangle from left to right
+---@param   x           number
+---@param   y           number
+---@param   len         number
+---@param   thick       number
+---@param   value_str   string
+---@param   max_value   number
+---@param   color       string
 function rectangle_rightleft(x, y, len, thick, value_str, max_value, color)
     rectangle_leftright(x, y, -len, thick, value_str, max_value, color)
 end
 
 
+---draw a rectangle from left to right
+---@param   x           number
+---@param   y           number
+---@param   len         number
+---@param   thick       number
+---@param   value_str   string
+---@param   max_value   number
+---@param   color       string
 function rectangle_bottomup(x, y, len, thick, value_str, max_value, color)
     local value = tonumber(value_str)
     if value > max_value then value = max_value end
@@ -109,33 +180,58 @@ function rectangle_bottomup(x, y, len, thick, value_str, max_value, color)
 end
 
 
+---draw a rectangle from left to right
+---@param   x           number
+---@param   y           number
+---@param   len         number
+---@param   thick       number
+---@param   value_str   string
+---@param   max_value   number
+---@param   color       string
 function rectangle_upbottom(x, y, len, thick, value_str, max_value, color)
     rectangle_bottomup(x, y, -len, thick, value_str, max_value, color)
 end
 
 
-function write(x, y, text, font_size, color)
-    _write_(x, y, text, main_font, font_size, color, 1, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL)
+---write text
+---@param   x           number
+---@param   y           number
+---@param   text        string
+---@param   font_size   number
+---@param   color       string
+---@param   font_name   string?          -- defaults to main_font defined in settings.lua
+---@param   font_slant  font_slant_t?    -- defaults to normal
+---@param   font_face   font_weight_t?   -- default to normal
+---@param   alpha       number?          -- defaults to 1
+function write(x, y, text, font_size, color, font_name, font_slant, font_face, alpha)
+    font_name  = font_name or main_font
+    alpha      = alpha or 1
+    font_slant = font_slant or CAIRO_FONT_SLANT_NORMAL
+    font_face  = font_face or CAIRO_FONT_WEIGHT_NORMAL
+
+    cairo_select_font_face(cr, font_name, font_slant, font_face);
+    cairo_set_font_size(cr, font_size)
+    cairo_set_source_rgba(cr, color_convert(color, alpha))
+    cairo_move_to(cr, x, y)
+    cairo_show_text(cr, text)
+    cairo_stroke(cr)
 end
 
 
+---convenience function to write text in bold
+---@param   x           number
+---@param   y           number
+---@param   text        string
+---@param   font_size   number
+---@param   color       string
 function write_bold(x, y, text, font_size, color)
-    -- convinience function to write in bold font
-    _write_(x, y, text, main_font, font_size, color, 1, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD)
+    write(x, y, text, font_size, color, nil, nil, CAIRO_FONT_WEIGHT_BOLD)
 end
 
 
-function _write_(x, y, text, font_name, font_size, color, alpha, font_slant, font_face)
-    cairo_select_font_face (cr, font_name, font_slant, font_face);
-    cairo_set_font_size (cr, font_size)
-    cairo_set_source_rgba (cr, color_convert(color, alpha))
-    cairo_move_to (cr, x, y)
-    cairo_show_text (cr, text)
-    cairo_stroke (cr)
-end
-
-
--- return a process according to its CPU consumption
+---return a process according to its CPU consumption
+---@param n any
+---@return string
 function getProcessN(n)
     local name = parse("top name " .. n)
     local value = parse("top cpu " .. n)
@@ -143,7 +239,9 @@ function getProcessN(n)
 end
 
 
--- return a process according to its memory consumption
+---return a process according to its memory consumption
+---@param n any
+---@return string
 function getMemoryN(n)
     local name = parse("top_mem name " .. n)
     local value = parse("top_mem mem_res " .. n)
@@ -151,6 +249,13 @@ function getMemoryN(n)
 end
 
 
+---write a list of $nb_todisplay processes into the screen
+---@param   x              number
+---@param   y              number
+---@param   interval       number
+---@param   nb_todisplay   number
+---@param   font_size      number
+---@param   color          string
 function write_list_proccesses_cpu(x, y, interval, nb_todisplay, font_size, color)
     local array = {}
     for i = 1, nb_todisplay do
@@ -160,7 +265,13 @@ function write_list_proccesses_cpu(x, y, interval, nb_todisplay, font_size, colo
 end
 
 
--- convenience function to write a list of running processes
+---convenience function to write a list of running processes that consume the most memory
+---@param   x              number
+---@param   y              number
+---@param   interval       number
+---@param   nb_todisplay   number
+---@param   font_size      number
+---@param   color          string
 function write_list_proccesses_mem(x, y, interval, nb_todisplay, font_size, color)
     local array = {}
     for i = 1, nb_todisplay do
@@ -171,29 +282,41 @@ end
 
 
 -- write text in multiple lines.
--- the text is contained in `content_array` where each entry is a line separated with `interval`
-function write_line_by_line(x, y, interval, content_array, color, font_size, bold)
+-- the text is contained in `content`
+-- each entry is a line separated with `interval`
+---@param   x           number
+---@param   y           number
+---@param   interval    number
+---@param   content     table<string>
+---@param   color       string
+---@param   font_size   number
+---@param   bold        boolean?
+function write_line_by_line(x, y, interval, content, color, font_size, bold)
     if bold == nil then bold = false end
     local yy = y
-    for i in pairs(content_array) do
-        if bold then write_bold(x, yy, content_array[i], font_size, color)
-        else         write(x, yy, content_array[i], font_size, color)
+    for i in pairs(content) do
+        if bold then write_bold(x, yy, content[i], font_size, color)
+        else         write(x, yy, content[i], font_size, color)
         end
         yy = yy + interval
     end
 end
 
 
--- convinience function
+---convinience function to use conky_parse()
+---@param str string
+---@return string
 function parse(str)
     return conky_parse(string.format("${%s}", str))
 end
 
 
--- return a color according to the provided value (threshold)
--- the colors are defined in "settings.lua"
+---return a color according to the provided value (threshold)
+---the colors are defined in "settings.lua"
+---@param percent number
+---@return string
 function color_frompercent(percent)
-    local perc = tonumber(percent)
+    local  perc = tonumber(percent)
     if     perc > threshold_critical then return colors.critic
     elseif perc > threshold_warning  then return colors.warn
     else                                  return colors.fg
@@ -201,8 +324,10 @@ function color_frompercent(percent)
 end
 
 
--- used for battery rate or other decreasing values
--- for example, change the color when the battery is low
+---used for battery rate or other decreasing values
+---for example, change the color when the battery is low
+---@param percent number
+---@return string
 function color_frompercent_reverse(percent)
     local perc = tonumber(percent)
     if      perc < battery_threshold_critical then return colors.critic
@@ -212,8 +337,10 @@ function color_frompercent_reverse(percent)
 end
 
 
+---input hexadecimal color code, returns its corresponding RGB+Alpha representation
+---@param colour string
+---@param alpha  number
 function color_convert(colour, alpha)
-    -- input hexadecimal color code, returns its corresponding RGB+Alpha representation
 	return ((colour / 0x10000) % 0x100) / 255., ((colour / 0x100) % 0x100) / 255., (colour % 0x100) / 255., alpha
 end
 
@@ -229,9 +356,10 @@ local _ssid              = "wireless_essid "          .. net_interface
 local _wifi_signal       = "wireless_link_qual_perc " .. net_interface
 local _local_ip          = "addr "                    .. net_interface
 
+
 -- functions to fetch some important system info
 -- for other variables, see: <http://conky.sourceforge.net/variables.html>
-function updates()              return parse("updates") end
+function updates()              return parse("updates") end                 --  in seconds
 function kernel()               return parse("kernel") end                  --  ex: 5.10.32-1-lts
 function system_name()          return parse("sysname") end                 --  ex: Linux
 function arch()                 return parse("machine") end                 --  ex: x86_64
@@ -298,50 +426,75 @@ function cpu_temperature_sensors()                                          -- t
 
     return result
 end
+
+
+---@param n? number | nil
+---@return string | nil
 function cpu_percent(n)
     if n == nil or n == 0 or n == "" then return parse("cpu") end
-    if n > 0 and n <= 32    then return parse("cpu cpu" .. n)
-    else                        return nil end
+    if n > 0 and n <= 32             then return parse("cpu cpu" .. n)
+    else                                  return nil end
 end
+
+
+---@param fs string
+---@return string | nil
 function fs_used(fs)
-    if fs == nil           then return nil
-    else                        return parse("fs_used " .. fs)
+    if fs == nil then return nil
+    else              return parse("fs_used " .. fs)
     end
 end
+
+
+---@param fs string
+---@return string | nil
 function fs_used_perc(fs)
-    if fs == nil           then return nil
-    else                        return parse("fs_used_perc " .. fs)
+    if fs == nil then return nil
+    else              return parse("fs_used_perc " .. fs)
     end
 end
+
+
+---@param fs string
+---@return string | nil
 function fs_size(fs)
-    if fs == nil           then return nil
-    else                        return parse("fs_size " .. fs)
+    if fs == nil then return nil
+    else              return parse("fs_size " .. fs)
     end
 end
+
+
+---@param fs string
+---@return string | nil
 function fs_free_perc(fs)
-    if fs == nil           then return nil
-    else                        return parse("fs_free_perc " .. fs)
+    if fs == nil then return nil
+    else              return parse("fs_free_perc " .. fs)
     end
 end
+
+
+---@param fs string
+---@return string | nil
 function fs_free(fs)
-    if fs == nil           then return nil
-    else                        return parse("fs_free " .. fs)
+    if fs == nil then return nil
+    else              return parse("fs_free " .. fs)
     end
 end
 
 
-public_ip = nil     -- variable that will hold the IP adress
-function get_public_ip() return public_ip end
-function set_public_ip(ip) 
-    if not ip then public_ip = "No Address"
-    else public_ip = tostring(ip)
-    end
+---@type string | nil holds the IP adress value.
+local public_ip = nil
+
+
+---@return string|nil
+function get_public_ip()
+    return public_ip
 end
 
---[[
-    Don't call this function every seconde because it is slow and public IP doesn't change much anyway.
-    Warning: if your internet connection is disfunctioning, this function may prevent the whole conky from launching
-]]
+
+---Don't call this function every seconde because it is slow and public IP doesn't change much anyway.
+---Warning: if your internet connection is disfunctioning, this function may prevent the whole conky from launching
+---@return nil
 function update_public_ip()
     if not use_public_ip then
         print("Warning: Turn on the variable use_public_ip (set it to true) in settings.lua before calling the function update_public_ip()")
@@ -351,18 +504,18 @@ function update_public_ip()
     -- fetch IP from the internet. other websites: "ifconfig.me/ip", "ident.me", "api.ipify.org"
     local file = io.popen("curl -s http://ipinfo.io/ip") 
     if not file then
-        set_public_ip(nil)
+        public_ip = "No Address"
         return nil
     end
 
     local output = file:read("*a")
     file:close()
     if output == nil or output == "" or string.len(output) > 15  then
-        set_public_ip(nil)
+        public_ip = "No Address"
         return nil
     end
 
-    set_public_ip(output)
+    public_ip = tostring(output)
     return output
 end
 
@@ -371,23 +524,24 @@ end
     The following will define multiple variables and functions according to the machine where it is ran
     the default value is a nil, so it is necessary to check in case you want to use the second battery.
 ]]
-has_battery        = nil   -- boolean
-has_second_battery = nil   -- boolean
-battery1_percent   = nil   -- function for the first battery. nil if it doesn't exist
-battery2_percent   = nil   -- function for the second battery if it exists. nil if it doesn't
-battery_percent    = nil   -- function that returns the value of the battery. adapts to single or double batteries. nil if no battery
-battery1_index     = nil   -- index of the first battery. nil if there is no battery. This is the number that follows 'BAT' ex: 'BAT0'
-battery2_index     = nil   -- index of the second battery. nil if there is no battery or no second battery
-discharging_battery = function() return false end  -- check if the battery is discharging or not
-initialized_battery = false -- check if the function `init_battery()` has already been called
-local called_init_battery_once = false -- sometimes, conky doesn't detect the battery the first time we require it.
 
---[[
-    check if there is a battery or multiple batteries
-    define the functions that return battery values
-    define discharging_battery() according to the number of batteries
-    NOTE: before calling this function, first check if the variable `initialized_battery` is false.
-]]
+has_battery         = nil    ---@type boolean  | nil
+has_second_battery  = nil    ---@type boolean  | nil
+battery1_percent    = nil    ---@type function | nil for the first battery. nil if it doesn't exist
+battery2_percent    = nil    ---@type function | nil for the second battery if it exists. nil if it doesn't
+battery_percent     = nil    ---@type function | nil returns the value of the battery. adapts to single or double batteries. nil if no battery
+battery1_index      = nil    ---@type number   | nil index of the first battery. nil if there is no battery. This is the number that follows 'BAT' ex: 'BAT0'
+battery2_index      = nil    ---@type number   | nil index of the second battery. nil if there is no battery or no second battery
+initialized_battery = false  ---@type boolean        check if the function `init_battery()` has already been called
+discharging_battery = function() return false end  -- check if the battery is discharging or not
+local called_init_battery_once = false ---@type boolean  sometimes, conky doesn't detect the battery the first time we require it.
+
+
+---this function is ran a single time to initialize the variables and functions related to the battery
+---check if there is a battery or multiple batteries
+---define the functions that return battery values
+---define discharging_battery() according to the number of batteries
+---NOTE: before calling this function, first check if the variable `initialized_battery` is false.
 function init_battery()
     if not called_init_battery_once then
         called_init_battery_once = true
@@ -395,7 +549,7 @@ function init_battery()
         initialized_battery = true
     end
 
-    local bat_indexes = {}
+    local bat_indexes = {}  ---@type table<number>
     local size = 0          -- how many batteries found
 
     -- determine how many batteries by calling them (even if it will print out error messages)
@@ -422,27 +576,35 @@ function init_battery()
     elseif size >= 1 then
         has_battery = true
         battery1_index = bat_indexes[1]
-        battery1_percent = function () return parse("battery_percent BAT" .. bat_indexes[1]) end
+        battery1_percent = function() return parse("battery_percent BAT" .. bat_indexes[1]) end
 
         if size == 1 then
-            battery_percent = function() return tonumber(battery1_percent()) end
-            discharging_battery = function() return string.match(parse("battery BAT" .. battery1_index), "discharging") end
+            battery_percent = function()
+                return tonumber(battery1_percent())
+            end
+
+            discharging_battery = function()
+                return string.match(parse("battery BAT" .. battery1_index), "discharging")
+            end
         end
 
         if size >= 2 then
             has_second_battery = true 
             battery2_index = bat_indexes[2]
 
+            ---@return string
             battery2_percent = function()
                 return parse("battery_percent BAT" .. bat_indexes[2])
             end
 
+            ---@return integer
             battery_percent = function() 
                 local b0 = tonumber(battery1_percent())
                 local b1 = tonumber(battery2_percent())
                 return math.floor((b0 + b1)/2)
             end
 
+            ---@return boolean
             discharging_battery = function() 
                 if string.match(parse("battery BAT" .. battery1_index), "discharging") then return true end
                 if string.match(parse("battery BAT" .. battery2_index), "discharging") then return true end
