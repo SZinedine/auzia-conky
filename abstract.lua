@@ -8,6 +8,7 @@
 ----------------------------------
 
 require("cairo")
+require("cairo_xlib")
 require("imlib2")
 require("settings")
 
